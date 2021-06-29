@@ -4,8 +4,8 @@ import UserController from './controllers/usercontroller';
 const userController = new UserController();
 const routes = express.Router();
 
-///fucionario
-routes.get('/funcionario', userController.index)
-routes.post('/funcionario', userController.create)
+///usuario
+routes.get('/usuario', userController.index)
+routes.post('/usuario', userController.create)
 
 export default routes;

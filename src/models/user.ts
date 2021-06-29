@@ -6,22 +6,24 @@ export class User {
     email: string;
     password: string;
 
-    async InsertUser(administador: User): Promise<boolean> {
+    async InsertUser(usuario: User): Promise<boolean> {
         try {
-            await knex('administrador').insert(
-                administador
+            await knex('usuario').insert(
+                usuario
             )
             return true
         } catch (err) {
+            console.log(err)
             return false
         }
     }
 
     async SelectUser(): Promise<User[]> {
         try {
-            const user = await knex('user') as User[]
+            const user = await knex('usuario') as User[]
             return user;
         } catch (err) {
+            console.log(err)
         }
     }
 }
