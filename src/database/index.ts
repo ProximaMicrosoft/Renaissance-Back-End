@@ -13,11 +13,7 @@ console.log("Dentro do Index", process.env.DATABASE_URL)
 const connection = knex({
     client: 'pg',
     connection: {
-        user: process.env.USUARIOBANCO,
-        password: process.env.PASSWORD,
-        port: Number(process.env.PORTA),
-        host: process.env.HOST,
-        database: process.env.DATABASE,
+        database: process.env.DATABASE_URL,
         ssl: { rejectUnauthorized: false }
     },
     useNullAsDefault: true,
