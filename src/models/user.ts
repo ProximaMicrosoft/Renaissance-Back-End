@@ -22,7 +22,6 @@ export class User {
             const user = await knex('user') as User[]
             return user;
         } catch (err) {
-            const user = new User();
         }
     }
 }
