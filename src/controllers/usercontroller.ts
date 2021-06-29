@@ -22,10 +22,11 @@ class UserController {
     }
 
     async update(req: Request, res: Response, next: NextFunction) {
-        const { username, password } = req.body
+        const body = req.body as User
         const { id } = req.params
         try {
-            await knex('administrador').update({ username, password }).where({ id })
+            const user = new User()
+            var result = await user.UpdateUser(body.name,body.password,Number(id))
             return res.send()
         }
         catch (err) {

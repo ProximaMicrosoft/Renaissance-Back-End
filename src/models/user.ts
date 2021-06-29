@@ -26,4 +26,13 @@ export class User {
             console.log(err)
         }
     }
+
+    async UpdateUser(name:String,passord:String,id:number):Promise<boolean> {
+        try {
+            await knex('administrador').update({name, passord}).where({id})
+            return true
+        } catch (err) {
+            return true
+        }
+    }
 }
