@@ -1,4 +1,3 @@
-import { User } from '../../models/user';
 import { response, Response } from 'express';
 import { User } from '../../models/user';
 import { ValidacaoUser } from '../../utils/validacoes/validacoesuser';
