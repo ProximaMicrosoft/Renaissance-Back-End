@@ -14,12 +14,26 @@ export class ValidacaoUser {
     }
 
     VerificaSenha(password: String): boolean {
-        if ((password.length > 6) && (password != "")) {
-            return true
-        } else {
+        try {
+            if ((password.length > 6) && (password != "")) {
+                return true
+            } else {
+                return false
+            }
+        } catch (err) {
             return false
         }
-
+    }
+    VerificaEmail(email: String): boolean {
+        try {
+            if (email != "") {
+                return true
+            } else {
+                return false
+            }
+        } catch (err) {
+            return false
+        }
     }
 
     VerificaRole(role: String): boolean {

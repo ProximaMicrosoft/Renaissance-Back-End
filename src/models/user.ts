@@ -47,4 +47,23 @@ export class User {
             return false
         }
     }
+
+    async Login(usuario: User): Promise<[boolean, User]> {
+        try {
+            const user = await knex.select().from<User>('usuario').where({
+                email: usuario.email,
+                password: usuario.password
+            }).limit(1) as User[]
+            user[0].password = ""
+            if (user[0].name != "" || user[0].name != undefined) {
+                return [true, user[0]]
+            } else {
+                return [false, user[0]]
+            }
+
+        } catch (err) {
+            console.log(err)
+            return [false, null]
+        }
+    }
 }

@@ -47,5 +47,20 @@ export class UserService {
         }
     }
 
+    async login(user: User): Promise<[Respostas, User]> {
+        const usuario = new User()
+        const respostas = new Respostas();
+        const [results, userlogado] = await usuario.Login(user)
+        if (results) {
+            respostas.status = 200
+            respostas.resposta = "Sucesso !"
+            return [respostas, userlogado]
+        } else {
+            respostas.status = 401
+            respostas.resposta = "Usuário não autorizado!"
+            return [respostas, userlogado]
+        }
+
+    }
 
 }

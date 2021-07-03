@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
-import knex from '../database/index'
 import { User } from '../models/user';
 import { UserService } from '../apis/services/userservice';
+import { ValidacaoUser } from '../utils/validacoes/validacoesuser';
 
 
 class UserController {
@@ -44,6 +44,19 @@ class UserController {
         const userservice = new UserService();
         var respostas = await userservice.delete(id)
         return res.status(respostas.status).json(respostas.resposta)
+    }
+
+    async login(req: Request, res: Response, next: NextFunction) {
+        const body = req.body as User
+        const userservice = new UserService();
+        const validacaoUser = new ValidacaoUser();
+        if (validacaoUser.VerificaSenha(body.password) == false || validacaoUser.VerificaEmail(body.email) == false) {
+            return res.status(400).json("Senha ou email inválidos")
+        } else {
+            const [respostas, user] = await userservice.login(body)
+            return res.status(respostas.status).json({ "resposta": respostas.resposta, "user": user })
+        }
+
     }
 
 }
