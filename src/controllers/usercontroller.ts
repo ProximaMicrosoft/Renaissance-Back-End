@@ -3,7 +3,7 @@ import { User } from '../models/user';
 import { UserService } from '../apis/services/userservice';
 import { ValidacaoUser } from '../utils/validacoes/validacoesuser';
 
-
+//melhorar validacoes nos metodos
 export class UserController {
 
     async index(req: Request, res: Response) {

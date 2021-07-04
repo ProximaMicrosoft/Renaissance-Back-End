@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
 import { Espaco } from '../models/espaco';
-import { UserService } from '../apis/services/userservice';
 import { EspacoService } from '../apis/services/espacoservice';
 
 //melhorar validacoes nos metodos
@@ -17,6 +16,7 @@ export class EspacoController {
     }
     async create(req: Request, res: Response, next: NextFunction) {
         const body = req.body as Espaco
+        console.log(body)
         body.fotoespaco = req.file.filename
         const espacoservice = new EspacoService();
         const respostas = await espacoservice.create(body)
