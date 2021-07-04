@@ -4,7 +4,7 @@ import { UserService } from '../apis/services/userservice';
 import { ValidacaoUser } from '../utils/validacoes/validacoesuser';
 
 
-class UserController {
+export class UserController {
 
     async index(req: Request, res: Response) {
         try {
@@ -61,6 +61,5 @@ class UserController {
 
 }
 
-export default UserController;
 
 

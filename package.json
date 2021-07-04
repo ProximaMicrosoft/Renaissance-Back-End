@@ -10,21 +10,25 @@
     "knex:migratejs": "knex migrate:latest --knexfile dist/knexfile.js migrate:latest",
     "knex:rollback": "knex migrate:rollback --knexfile src/knexfile.ts migrate:rollback",
     "knex:rollbackjs": "knex migrate:rollback --knexfile src/knexfile.js migrate:rollback",
-    "knex:seed": "knex --knexfile knexfile.ts seed:run"
+    "knex:seed": "knex --knexfile knexfile.ts seed:run",
+    "criamigrate": "knex migrate:make --knexfile src/knexfile.ts  create_table_funcionario"
   },
   "license": "MIT",
   "dependencies": {
     "@typescript-eslint/eslint-plugin": "^4.28.0",
     "cors": "^2.8.5",
+    "crypto": "^1.0.1",
     "dotenv": "^10.0.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "express": "^4.17.1",
     "knex": "^0.95.6",
+    "multer": "^1.4.2",
     "pg": "^8.6.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.10",
     "@types/express": "^4.17.12",
+    "@types/multer": "^1.4.6",
     "eslint": "^5.16.0",
     "ts-node": "^10.0.0",
     "ts-node-dev": "^1.1.6",

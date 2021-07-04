@@ -2,3 +2,5 @@
 /dist
 .env
 .env.test
+uploads/*
+!uploads/.gitkeep

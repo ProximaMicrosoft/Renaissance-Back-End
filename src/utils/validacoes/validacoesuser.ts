@@ -5,7 +5,9 @@ export class ValidacaoUser {
     ValidaUsuario(usuario: User): boolean {
         if (usuario.name != ""
             && (this.VerificaSenha(usuario.password))
-            && (this.VerificaRole(usuario.role))
+            && (this.VerificaRole(usuario.role)
+                && (this.VerificaTelefone(usuario.numerotelefone))
+            )
         ) {
             return true
         } else {
@@ -38,6 +40,16 @@ export class ValidacaoUser {
 
     VerificaRole(role: String): boolean {
         if (role == "ADMIN" || role == "USER") {
+            return true
+        } else {
+            return false
+        }
+
+    }
+
+    VerificaTelefone(telefone: String): boolean {
+        console.log(telefone)
+        if (String(telefone).length == 11) {
             return true
         } else {
             return false

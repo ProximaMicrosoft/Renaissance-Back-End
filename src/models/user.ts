@@ -4,11 +4,16 @@ export class User {
     id: BigInt;
     name: string;
     email: string;
+    token: string;
+    numerotelefone: string;
     password: string;
     numeroapartamento: number
     role: string;
 
     async InsertUser(usuario: User): Promise<boolean> {
+        usuario.token = "aaaa"
+        console.log(usuario)
+
         try {
             await knex('usuario').insert(
                 usuario
