@@ -11,8 +11,9 @@ export class UserService {
         const respostas = new Respostas();
         var resultvalidacao = validacaoUser.ValidaUsuario(user)
         if (resultvalidacao) {
-            user.token = (criptografia.gerarSalt(user.password)).salt
-            user.password = (criptografia.gerarSalt(user.password)).senhaprasalvar
+            const cripto = criptografia.gerarSalt(user.password)
+            user.token = cripto.salt
+            user.password = cripto.senhaprasalvar
             var result = await usuario.InsertUser(user)
             if (result) {
                 respostas.status = 201
@@ -53,8 +54,9 @@ export class UserService {
     async login(user: User): Promise<[Respostas, User]> {
         const usuario = new User()
         const respostas = new Respostas();
-        const [results, userlogado] = await usuario.Login(user)
-        if (results) {
+        const [result, userlogado] = await usuario.Login(user)
+        console.log("results" + result)
+        if (result) {
             respostas.status = 200
             respostas.resposta = "Sucesso !"
             return [respostas, userlogado]

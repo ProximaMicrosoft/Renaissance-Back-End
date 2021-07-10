@@ -1,3 +1,4 @@
+import { Criptografia } from '../utils/criptografia/criptografia';
 import knex from '../database/index'
 
 export class User {
@@ -53,14 +54,17 @@ export class User {
     async Login(usuario: User): Promise<[boolean, User]> {
         try {
             const user = await knex.select().from<User>('usuario').where({
-                email: usuario.email,
-                password: usuario.password
+                email: usuario.email
             }).limit(1) as User[]
+            const criptografia = new Criptografia()
+            console.log(user[0])
+            var senhacorreta = criptografia.VericaHashSenha(usuario.password, user[0].token, user[0].password)
             user[0].password = ""
-            if (user[0].name != "" || user[0].name != undefined) {
+            user[0].token = ""
+            if (senhacorreta) {
                 return [true, user[0]]
             } else {
-                return [false, user[0]]
+                return [false, null]
             }
 
         } catch (err) {
