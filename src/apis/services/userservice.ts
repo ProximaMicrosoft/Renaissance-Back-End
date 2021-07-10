@@ -1,14 +1,18 @@
 import { User } from '../../models/user';
 import { Respostas } from '../../models/respostas';
 import { ValidacaoUser } from '../../utils/validacoes/validacoesuser';
+import { Criptografia } from '../../utils/criptografia/criptografia';
 
 export class UserService {
     async create(user: User): Promise<Respostas> {
         const usuario = new User()
-        const validacaoUser = new ValidacaoUser();
+        const validacaoUser = new ValidacaoUser()
+        const criptografia = new Criptografia()
         const respostas = new Respostas();
         var resultvalidacao = validacaoUser.ValidaUsuario(user)
         if (resultvalidacao) {
+            user.token = (criptografia.gerarSalt(user.password)).salt
+            user.password = (criptografia.gerarSalt(user.password)).senhaprasalvar
             var result = await usuario.InsertUser(user)
             if (result) {
                 respostas.status = 201
