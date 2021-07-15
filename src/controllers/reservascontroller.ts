@@ -1,4 +1,4 @@
-import { Reservas } from '../models/reservas';
+import { Reservas, ReservaJson } from '../models/reservas';
 import { Request, Response, NextFunction } from 'express';
 import { RerservaService } from '../apis/services/reservaservices';
 
@@ -15,8 +15,18 @@ export class ReservasController {
         }
     }
 
+    async indexJoinReservasUser(req: Request, res: Response) {
+        try {
+            const reservaservice = new RerservaService();
+            const results = await reservaservice.indexJoinEspacoUser()
+            return res.json(results)
+        } catch (err) {
+            return res.status(401).json("Ocorreu algum erro!")
+        }
+    }
+
     async create(req: Request, res: Response, next: NextFunction) {
-        const body = req.body as Reservas
+        const body = req.body as ReservaJson
         const reservaservice = new RerservaService();
         const respostas = await reservaservice.create(body)
         return res.status(respostas.status).json(respostas.resposta)
@@ -28,7 +38,6 @@ export class ReservasController {
         var respostas = await reservaservice.delete(id)
         return res.status(respostas.status).json(respostas.resposta)
     }
-
 
 }
 

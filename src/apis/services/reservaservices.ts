@@ -1,10 +1,16 @@
-import { Reservas } from '../../models/reservas';
+import { Reservas, ReservaJson, ReservaJoin } from '../../models/reservas';
 import { Respostas } from '../../models/respostas';
+import { ValidacoesReserva } from '../../utils/validacoes/validacoesreserva';
 
 export class RerservaService {
-    async create(reservas: Reservas): Promise<Respostas> {
+    async create(reservasjson: ReservaJson): Promise<Respostas> {
         const reserva = new Reservas()
-        var result = await reserva.InsertReserva(reservas)
+        const validacaoreserva = new ValidacoesReserva()
+        reserva.horario = validacaoreserva.montarData(reservasjson.data, reservasjson.horario)
+        reserva.espacos_id = reservasjson.espacos_id
+        reserva.usuario_id = reservasjson.usuario_id
+
+        var result = await reserva.InsertReserva(reserva)
         const respostas = new Respostas();
         if (result) {
             respostas.status = 201
@@ -20,6 +26,12 @@ export class RerservaService {
     async index(): Promise<Reservas[]> {
         const reserva = new Reservas()
         const results = await reserva.SelectReserva()
+        return results;
+    }
+
+    async indexJoinEspacoUser(): Promise<ReservaJoin[]> {
+        const reserva = new Reservas()
+        const results = await reserva.SelectReservasJoin()
         return results;
     }
 
