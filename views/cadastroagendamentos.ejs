@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Agendamento</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+</head>
+
+<body>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <form id="formvisita">
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Data da Reserva</label>
+            <input type="date" class="form-control inputtop">
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Horário</label>
+            <input type="number" class="form-control inputtop" id="exampleInputPassword1">
+        </div>
+        <select class="form-select inputtop" aria-label="Default select example">
+            <option selected>Selecione o espaço</option>
+            <% espacos.forEach(function(espaco) { %>
+                <option value="<%=espaco.id%>">
+                    <%=espaco.nameespaco%>
+                </option>
+                <% }); %>
+        </select>
+        <select class="form-select inputtop" aria-label="Default select example">
+            <option selected>Selecione o usuário</option>
+            <% usuarios.forEach(function(usuario) { %>
+                <option value="<%=usuario.id%>">
+                    <%=usuario.name%>
+                </option>
+                <% }); %>
+        </select>
+        <br>
+        <br>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <script>
+        var alfa;
+
+        $("#formvisita").submit(function (event) {
+            event.preventDefault();
+
+            var var1 = document.getElementsByClassName("inputtop")[0].value
+            var var2 = document.getElementsByClassName("inputtop")[1].value
+            var var3 = document.getElementsByClassName("inputtop")[2].value
+            var var4 = document.getElementsByClassName("inputtop")[3].value
+            var1 = var1.split("-")[2] + "/" + var1.split("-")[1] + "/" + var1.split("-")[0]
+            const datajson = {
+                data: var1, horario: Number(var2), espacos_id: Number(var3), usuario_id: Number(var4)
+            }
+            console.log(datajson)
+
+            $.ajax({
+                url: "/reservas",
+                type: 'post',
+                data: datajson,
+                beforeSend: function () {
+                    // $("#resultado").html("ENVIANDO...");
+                },
+                success: function (data) {
+
+                }
+            })
+                .done(function (msg) {
+                    console.log(msg)
+                })
+                .fail(function (msg) {
+                    console.log(msg);
+                });
+
+
+
+        });
+    </script>
+</body>
+
+</html>

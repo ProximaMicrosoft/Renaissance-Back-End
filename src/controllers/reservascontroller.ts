@@ -27,9 +27,10 @@ export class ReservasController {
 
     async create(req: Request, res: Response, next: NextFunction) {
         const body = req.body as ReservaJson
+        console.log(body)
         const reservaservice = new RerservaService();
         const respostas = await reservaservice.create(body)
-        return res.status(respostas.status).json(respostas.resposta)
+        return res.status(respostas.status).json({ "resposta": respostas.resposta })
     }
 
     async delete(req: Request, res: Response, next: NextFunction) {

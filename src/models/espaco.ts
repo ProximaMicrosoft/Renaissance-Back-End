@@ -1,10 +1,18 @@
 import knex from '../database/index'
 
 export class Espaco {
-    id: BigInt;
+    id: number;
     nameespaco: string;
     fotoespaco: string;
     descricaoespaco: string;
+
+    constructor(id?: number, nameespaco?: string, fotoespaco?: string, descricaoespaco?: string) {
+        this.id = id;
+        this.nameespaco = nameespaco;
+        this.fotoespaco = fotoespaco;
+        this.descricaoespaco = descricaoespaco;
+    }
+
 
     async InsertEspaco(espaco: Espaco): Promise<boolean> {
         console.log(espaco)
@@ -44,6 +52,18 @@ export class Espaco {
         } catch (err) {
             console.log(err)
             return false
+        }
+    }
+
+    async SelectEspacoporId(espacoobject: Espaco): Promise<Espaco> {
+        try {
+            const espaco = await knex.select().from<Espaco>('espacos').where({
+                id: espacoobject.id
+            }).limit(1) as Espaco[]
+            return espaco[0]
+        } catch (err) {
+            console.log(err)
+            return new Espaco();
         }
     }
 

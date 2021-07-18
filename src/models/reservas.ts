@@ -1,30 +1,30 @@
 import knex from '../database/index'
 
 export interface ReservaJoin {
-    id: BigInt;
+    id: number;
     horario: string;
     nameespaco: string;
     fotoespaco: string;
     descricaoespaco: string;
-    espacos_id: BigInt;
-    usuario_id: BigInt;
+    espacos_id: number;
+    usuario_id: number;
     name: string;
     email: string;
 }
 
 export interface ReservaJson {
-    id: BigInt;
+    id: number;
     data: string;
     horario: number;
-    espacos_id: BigInt;
-    usuario_id: BigInt;
+    espacos_id: number;
+    usuario_id: number;
 }
 
 export class Reservas {
-    id: BigInt;
+    id: number;
     horario: string;
-    espacos_id: BigInt;
-    usuario_id: BigInt;
+    espacos_id: number;
+    usuario_id: number;
 
     async InsertReserva(reserva: Reservas): Promise<boolean> {
         console.log(reserva)
@@ -69,4 +69,7 @@ export class Reservas {
             return false
         }
     }
+
+
+
 }

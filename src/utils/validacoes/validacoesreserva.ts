@@ -2,7 +2,7 @@
 
 
 export class ValidacoesReserva {
-    verificaHorario(espaco: String, horario: number): string {
+    verificaHorario(espaco: String, horario: number): [string, Error] {
         if (espaco == "ACADEMIA") {
             return this.verificaFachaTempo(5, 23, horario)
         }
@@ -48,13 +48,13 @@ export class ValidacoesReserva {
 
     }
 
-    verificaFachaTempo(horarioinicial: number, horariofinal: number, horarioenviado: number): string {
+    verificaFachaTempo(horarioinicial: number, horariofinal: number, horarioenviado: number): [string, Error] {
         for (var i = horarioinicial; i <= horariofinal; i++) {
             if (horarioenviado == i) {
-                return "horário permitido"
+                return ["horário permitido", null]
             }
         }
-        return "horario nao permitido"
+        return ["horario nao permitido", new Error("horario nao permitido")]
     }
 
 }
