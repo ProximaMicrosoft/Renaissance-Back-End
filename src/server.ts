@@ -6,6 +6,7 @@ import dotenv from 'dotenv';
 import { Criptografia } from './utils/criptografia/criptografia';
 import { Espaco } from './models/espaco'
 import { User } from './models/user'
+import { ValidacoesReserva } from './utils/validacoes/validacoesreserva';
 
 dotenv.config();
 const app = express()

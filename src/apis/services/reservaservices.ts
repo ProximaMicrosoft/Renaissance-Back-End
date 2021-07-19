@@ -16,7 +16,14 @@ export class RerservaService {
             respostas.status = 400
             respostas.resposta = message
             return respostas
-        } else {
+        }
+        var verificandoregradequantidade = await validacaoreserva.verificaSeQuantidadeDeRegistroUltrapassaUnidadeTempo(espacoid.nameespaco, reservasjson.data, reservasjson.horario)
+        if (verificandoregradequantidade) {
+            respostas.status = 400
+            respostas.resposta = "Você tentou cadastrar um reserva, porém o limite para esse horário foi excedido"
+            return respostas
+        }
+        else {
             reserva.horario = validacaoreserva.montarData(reservasjson.data, reservasjson.horario)
             reserva.espacos_id = reservasjson.espacos_id
             reserva.usuario_id = reservasjson.usuario_id

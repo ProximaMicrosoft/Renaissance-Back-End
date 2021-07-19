@@ -1,4 +1,5 @@
-
+import { Reservas } from '../../models/reservas';
+import { ACADEMIA, BRINQUEDOTECA, CAMPINHO, DECK, PISCINA, QUADRA, SALAODEJOGOS, SALOESDEFESTAS } from '../../constants/constantes';
 
 
 export class ValidacoesReserva {
@@ -45,7 +46,6 @@ export class ValidacoesReserva {
         console.log("horagora" + horaagora)
         datacompleta = dataagora + "T" + horaagora + ":" + "00" + ":00"
         return datacompleta
-
     }
 
     verificaFachaTempo(horarioinicial: number, horariofinal: number, horarioenviado: number): [string, Error] {
@@ -55,6 +55,29 @@ export class ValidacoesReserva {
             }
         }
         return ["horario nao permitido", new Error("horario nao permitido")]
+    }
+
+    //verifica se a quantidade de reservas por espaco é grande ou menor
+    async verificaSeQuantidadeDeRegistroUltrapassaUnidadeTempo(espaco: string, data: string, horario: number): Promise<boolean> {
+
+        const reservas = new Reservas()
+        var numerolimite: number
+        var listas: [String, number][]
+        listas = [["ACADEMIA", ACADEMIA], ["PISCINA", PISCINA], ["BRINQUEDOTECA", BRINQUEDOTECA], ["CAMPINHO", CAMPINHO],
+        ["QUADRA", QUADRA], ["SALÃO DE JOGOS", SALAODEJOGOS], ["DECK", DECK], ["SALAO DE FESTA", SALOESDEFESTAS]]
+        listas.forEach(async function (lista) {
+            if (lista[0] == espaco) {
+                numerolimite = lista[1]
+            }
+        })
+        var dataformatada = this.montarData(data, horario)
+        var [numero, errorqtd] = await reservas.VerificaQuantidadeReservaPorData(dataformatada)
+        if (numero < numerolimite) {
+            return false
+        } else {
+            return true
+
+        }
     }
 
 }

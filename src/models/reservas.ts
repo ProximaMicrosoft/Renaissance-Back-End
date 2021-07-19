@@ -71,5 +71,14 @@ export class Reservas {
     }
 
 
+    async VerificaQuantidadeReservaPorData(data: string): Promise<[number, Error]> {
+        try {
+            const reservas = await knex('reservas').where({ horario: data }) as Reservas[]
+            return [reservas.length, null]
+        } catch (err) {
+            return [0, new Error("nenhuma reserva encontrada !")]
+        }
+    }
+
 
 }
