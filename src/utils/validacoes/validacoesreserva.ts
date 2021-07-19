@@ -1,7 +1,8 @@
 import { Reservas } from '../../models/reservas';
 import { ACADEMIA, BRINQUEDOTECA, CAMPINHO, DECK, PISCINA, QUADRA, SALAODEJOGOS, SALOESDEFESTAS } from '../../constants/constantes';
 
-
+//adicionar metodo de validacao para nao permitir dias anteriores
+//melhorar a validacao para espacos onde tem um dia para permitir cadastrar so por dia
 export class ValidacoesReserva {
     verificaHorario(espaco: String, horario: number): [string, Error] {
         if (espaco == "ACADEMIA") {
