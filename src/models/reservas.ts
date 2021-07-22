@@ -1,4 +1,5 @@
 import knex from '../database/index'
+import { DataRetorna } from '../utils/funcoesutils/data'
 
 export interface ReservaJoin {
     id: number;
@@ -39,12 +40,37 @@ export class Reservas {
         }
     }
 
-    async SelectReservasJoin(): Promise<ReservaJoin[]> {
+    async SelectReservasJoin(id: number, espaco: number, tipofiltro: string): Promise<ReservaJoin[]> {
+        var filtros;
+        const dataretorna = new DataRetorna()
+        var [datainicial, datafinal] = dataretorna.retornaDataHoje()
+
+        if (isNaN(id) == false && id != 0) {
+            filtros = { 'usuario.id': id }
+        }
+        if (isNaN(espaco) == false && espaco != 0) {
+            filtros = { 'usuario.id': id, 'espacos_id': espaco }
+        }
+
         try {
-            const espacos = await knex('reservas').
-                join('usuario', 'reservas.usuario_id', '=', 'usuario.id').
-                join('espacos', 'reservas.espacos_id', '=', 'espacos.id') as ReservaJoin[]
-            return espacos;
+            if (tipofiltro == "day") {
+                const espacos = await knex('reservas').
+                    join('usuario', 'reservas.usuario_id', '=', 'usuario.id').
+                    join('espacos', 'reservas.espacos_id', '=', 'espacos.id').
+                    where(filtros).whereBetween('reservas.horario', [datainicial, datafinal]).
+                    select().orderBy('reservas.horario') as ReservaJoin[]
+                return espacos;
+
+            } else {
+                const espacos = await knex('reservas').
+                    join('usuario', 'reservas.usuario_id', '=', 'usuario.id').
+                    join('espacos', 'reservas.espacos_id', '=', 'espacos.id').
+                    where(filtros).select().orderBy('reservas.horario') as ReservaJoin[]
+                return espacos;
+            }
+
+
+
         } catch (err) {
             console.log(err)
         }

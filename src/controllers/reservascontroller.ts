@@ -16,12 +16,15 @@ export class ReservasController {
     }
 
     async indexJoinReservasUser(req: Request, res: Response) {
+        const id = req.params.id
+        const espaco = req.query.espaco
+        const tipofiltro = req.query.tipofiltro as string
         try {
             const reservaservice = new RerservaService();
-            const results = await reservaservice.indexJoinEspacoUser()
+            const results = await reservaservice.indexJoinEspacoUser(Number(id), Number(espaco), tipofiltro)
             return res.json(results)
         } catch (err) {
-            return res.status(401).json("Ocorreu algum erro!")
+            return res.status(400).json("Ocorreu algum erro!")
         }
     }
 

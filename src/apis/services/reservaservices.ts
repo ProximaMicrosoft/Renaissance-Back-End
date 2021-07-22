@@ -48,9 +48,9 @@ export class RerservaService {
         return results;
     }
 
-    async indexJoinEspacoUser(): Promise<ReservaJoin[]> {
+    async indexJoinEspacoUser(id: number, espaco: number, tipofiltro: string): Promise<ReservaJoin[]> {
         const reserva = new Reservas()
-        const results = await reserva.SelectReservasJoin()
+        const results = await reserva.SelectReservasJoin(id, espaco, tipofiltro)
         return results;
     }
 

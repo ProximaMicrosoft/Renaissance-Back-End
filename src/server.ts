@@ -20,7 +20,8 @@ app.use('/uploads', express.static(path.resolve(__dirname, '..', 'uploads')));
 app.get('/cadastrodevisitas', async function (req, res) {
     const espaco = new Espaco()
     const usuarios = new User()
-    var listadeespacos = await espaco.SelectEspaco()
+    var listadeespacos =
+        await espaco.SelectEspaco()
     var listadeusuario = await usuarios.SelectUser()
     res.render('cadastroagendamentos.ejs', { espacos: listadeespacos, usuarios: listadeusuario });
 });
