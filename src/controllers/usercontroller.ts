@@ -15,6 +15,7 @@ export class UserController {
             return res.status(401).json("Ocorreu algum erro!")
         }
     }
+
     async create(req: Request, res: Response, next: NextFunction) {
         const body = req.body as User
         const userservice = new UserService();

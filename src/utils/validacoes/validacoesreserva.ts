@@ -1,4 +1,4 @@
-import { Reservas } from '../../models/reservas';
+import { Reservas, ReservaJoin, ReservaJoinResponse } from '../../models/reservas';
 import { ACADEMIA, BRINQUEDOTECA, CAMPINHO, DECK, PISCINA, QUADRA, SALAODEJOGOS, SALOESDEFESTAS } from '../../constants/constantes';
 
 //adicionar metodo de validacao para nao permitir dias anteriores
@@ -47,6 +47,27 @@ export class ValidacoesReserva {
         console.log("horagora" + horaagora)
         datacompleta = dataagora + "T" + horaagora + ":" + "00" + ":00"
         return datacompleta
+    }
+    //recebe 2021-07-22T23:00:00.000Z
+    desmontaData(horario: Date): [string, string] {
+        var horariostring = horario.toISOString().split("T")
+        var data = (horariostring[0]).split("-")[2] + "/" + (horariostring[0]).split("-")[1] + "/"
+            + (horariostring[0]).split("-")[0]
+        var horarioseparado = horariostring[1].split(":")[0]
+        return [horarioseparado, data]
+    }
+
+    passandoReservaJoinParaReservaJson(reservaslista: ReservaJoin[]): ReservaJoinResponse[] {
+        var listajoinresponse = [] as ReservaJoinResponse[]
+        for (var i = 0; i < reservaslista.length; i++) {
+            var lista = <ReservaJoinResponse>{}
+            var [horario, data] = this.desmontaData(new Date(reservaslista[i].horario))
+            lista.id = reservaslista[i].id
+            lista.data = data
+            lista.horario = Number(horario)
+            listajoinresponse.push(lista)
+        }
+        return listajoinresponse
     }
 
     verificaFachaTempo(horarioinicial: number, horariofinal: number, horarioenviado: number): [string, Error] {

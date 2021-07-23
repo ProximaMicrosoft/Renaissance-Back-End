@@ -10,39 +10,55 @@
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
 </head>
+<style>
+    section {
+        width: 100%;
+        position: relative;
+        padding-left: 200px;
+        padding-right: 200px;
+        padding-top: 50px;
+    }
+</style>
 
 <body>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-    <form id="formvisita">
-        <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Data da Reserva</label>
-            <input type="date" class="form-control inputtop">
-        </div>
-        <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Horário</label>
-            <input type="number" class="form-control inputtop" id="exampleInputPassword1">
-        </div>
-        <select class="form-select inputtop" aria-label="Default select example">
-            <option selected>Selecione o espaço</option>
-            <% espacos.forEach(function(espaco) { %>
-                <option value="<%=espaco.id%>">
-                    <%=espaco.nameespaco%>
-                </option>
-                <% }); %>
-        </select>
-        <select class="form-select inputtop" aria-label="Default select example">
-            <option selected>Selecione o usuário</option>
-            <% usuarios.forEach(function(usuario) { %>
-                <option value="<%=usuario.id%>">
-                    <%=usuario.name%>
-                </option>
-                <% }); %>
-        </select>
-        <br>
-        <br>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+    <section>
+        <form id="formvisita">
+            <h4>Cadastro de Reserva</h4>
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Data da Reserva</label>
+                <input type="date" class="form-control inputtop">
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Horário</label>
+                <input type="number" class="form-control inputtop" id="exampleInputPassword1">
+            </div>
+            <label for="exampleInputPassword1" class="form-label">Selecione o espaço</label>
+            <select class="form-select inputtop" aria-label="Default select example">
+                <option selected>Selecione o espaço</option>
+                <% espacos.forEach(function(espaco) { %>
+                    <option value="<%=espaco.id%>">
+                        <%=espaco.nameespaco%>
+                    </option>
+                    <% }); %>
+            </select>
+            <br>
+            <label for="exampleInputPassword1" class="form-label">Selecione o usuário</label>
+            <select class="form-select inputtop" aria-label="Default select example">
+                <option selected>Selecione o usuário</option>
+                <% usuarios.forEach(function(usuario) { %>
+                    <option value="<%=usuario.id%>">
+                        <%=usuario.name%>
+                    </option>
+                    <% }); %>
+            </select>
+            <br>
+            <br>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </section>
+
     <script>
         var alfa;
 

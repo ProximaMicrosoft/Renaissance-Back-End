@@ -1,5 +1,5 @@
 import { Espaco } from '../../models/espaco';
-import { Reservas, ReservaJson, ReservaJoin } from '../../models/reservas';
+import { Reservas, ReservaJson, ReservaJoinResponse } from '../../models/reservas';
 import { Respostas } from '../../models/respostas';
 import { ValidacoesReserva } from '../../utils/validacoes/validacoesreserva';
 
@@ -48,7 +48,7 @@ export class RerservaService {
         return results;
     }
 
-    async indexJoinEspacoUser(id: number, espaco: number, tipofiltro: string): Promise<ReservaJoin[]> {
+    async indexJoinEspacoUser(id: number, espaco: number, tipofiltro: string): Promise<ReservaJoinResponse[]> {
         const reserva = new Reservas()
         const results = await reserva.SelectReservasJoin(id, espaco, tipofiltro)
         return results;

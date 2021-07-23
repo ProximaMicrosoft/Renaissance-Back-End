@@ -1,9 +1,23 @@
+import { ValidacoesReserva } from '../utils/validacoes/validacoesreserva';
 import knex from '../database/index'
 import { DataRetorna } from '../utils/funcoesutils/data'
 
 export interface ReservaJoin {
     id: number;
     horario: string;
+    nameespaco: string;
+    fotoespaco: string;
+    descricaoespaco: string;
+    espacos_id: number;
+    usuario_id: number;
+    name: string;
+    email: string;
+}
+
+export interface ReservaJoinResponse {
+    id: number;
+    data: string;
+    horario: number;
     nameespaco: string;
     fotoespaco: string;
     descricaoespaco: string;
@@ -40,9 +54,10 @@ export class Reservas {
         }
     }
 
-    async SelectReservasJoin(id: number, espaco: number, tipofiltro: string): Promise<ReservaJoin[]> {
+    async SelectReservasJoin(id: number, espaco: number, tipofiltro: string): Promise<ReservaJoinResponse[]> {
         var filtros;
         const dataretorna = new DataRetorna()
+        const validacaoreserva = new ValidacoesReserva()
         var [datainicial, datafinal] = dataretorna.retornaDataHoje()
 
         if (isNaN(id) == false && id != 0) {
@@ -59,18 +74,18 @@ export class Reservas {
                     join('espacos', 'reservas.espacos_id', '=', 'espacos.id').
                     where(filtros).whereBetween('reservas.horario', [datainicial, datafinal]).
                     select().orderBy('reservas.horario') as ReservaJoin[]
-                return espacos;
+                return validacaoreserva.passandoReservaJoinParaReservaJson(espacos);
 
             } else {
                 const espacos = await knex('reservas').
                     join('usuario', 'reservas.usuario_id', '=', 'usuario.id').
                     join('espacos', 'reservas.espacos_id', '=', 'espacos.id').
-                    where(filtros).select().orderBy('reservas.horario') as ReservaJoin[]
-                return espacos;
+                    where(filtros).where('reservas.horario', '>=', datainicial).
+                    select('reservas.id', 'reservas.horario', 'espacos.nameespaco').orderBy('reservas.horario') as ReservaJoin[]
+
+                return validacaoreserva.passandoReservaJoinParaReservaJson(espacos);
+
             }
-
-
-
         } catch (err) {
             console.log(err)
         }
