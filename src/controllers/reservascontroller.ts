@@ -28,6 +28,17 @@ export class ReservasController {
         }
     }
 
+    async verificandoHorariosIndisponiveisEspaco(req: Request, res: Response) {
+        const idespaco = req.params.id
+        try {
+            const reservaservice = new RerservaService()
+            const results = await reservaservice.verificaHorariosIndisponiveisPorReserva(Number(idespaco))
+            return res.json(results)
+        } catch (err) {
+            return res.status(400).json("Ocorreu algum erro!")
+        }
+    }
+
     async create(req: Request, res: Response, next: NextFunction) {
         const body = req.body as ReservaJson
         console.log(body)

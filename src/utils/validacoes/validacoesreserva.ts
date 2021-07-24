@@ -1,4 +1,4 @@
-import { Reservas, ReservaJoin, ReservaJoinResponse } from '../../models/reservas';
+import { Reservas, ReservaJoin, ReservaJoinResponse, DiasHorariosIndiponiveis } from '../../models/reservas';
 import { ACADEMIA, BRINQUEDOTECA, CAMPINHO, DECK, PISCINA, QUADRA, SALAODEJOGOS, SALOESDEFESTAS } from '../../constants/constantes';
 
 //adicionar metodo de validacao para nao permitir dias anteriores
@@ -65,6 +65,7 @@ export class ValidacoesReserva {
             lista.id = reservaslista[i].id
             lista.data = data
             lista.horario = Number(horario)
+            lista.name = reservaslista[i].name
             listajoinresponse.push(lista)
         }
         return listajoinresponse
@@ -100,6 +101,47 @@ export class ValidacoesReserva {
             return true
 
         }
+    }
+
+    montaObjetoDiasHorariosIndiponiveis(reservas: Reservas[]): DiasHorariosIndiponiveis[] {
+
+        var lista = <DiasHorariosIndiponiveis[]>{}
+        lista = []
+        var horariodisponivel = <DiasHorariosIndiponiveis>{}
+        horariodisponivel.horariosindiponveis = []
+
+        reservas.forEach((reserva, index) => {
+            var [horarioseparado, data] = this.desmontaData(new Date(reserva.horario))
+
+            if (index == 0) {
+                horariodisponivel.horario = data
+                horariodisponivel.horariosindiponveis.push(Number(horarioseparado))
+                lista.push(horariodisponivel)
+                horariodisponivel = <DiasHorariosIndiponiveis>{}
+            } else {
+                if (lista[(lista.length) - 1].horario == data) {
+                    lista[(lista.length) - 1].horario = data
+                    lista[(lista.length) - 1].horariosindiponveis.push(Number(horarioseparado))
+                    console.log(lista)
+                } else {
+                    horariodisponivel = <DiasHorariosIndiponiveis>{}
+                    console.log(lista)
+                    horariodisponivel.horario = data
+                    console.log(lista)
+                    horariodisponivel.horariosindiponveis = []
+                    horariodisponivel.horariosindiponveis.push(Number(horarioseparado))
+                    lista.push(horariodisponivel)
+                }
+
+            }
+
+        })
+        return lista
+    }
+
+    verificaDentroArrayRegraDeUnidade(array: DiasHorariosIndiponiveis[], espaco: string): DiasHorariosIndiponiveis[] {
+
+
     }
 
 }

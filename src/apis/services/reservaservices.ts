@@ -1,5 +1,5 @@
 import { Espaco } from '../../models/espaco';
-import { Reservas, ReservaJson, ReservaJoinResponse } from '../../models/reservas';
+import { Reservas, ReservaJson, ReservaJoinResponse, DiasHorariosIndiponiveis } from '../../models/reservas';
 import { Respostas } from '../../models/respostas';
 import { ValidacoesReserva } from '../../utils/validacoes/validacoesreserva';
 
@@ -46,6 +46,14 @@ export class RerservaService {
         const reserva = new Reservas()
         const results = await reserva.SelectReserva()
         return results;
+    }
+
+    async verificaHorariosIndisponiveisPorReserva(idespaco: number): Promise<DiasHorariosIndiponiveis[]> {
+        const reserva = new Reservas()
+        const validacaoreserva = new ValidacoesReserva()
+        const results = await reserva.VerificandoHorariosIndisponiveisPorEspaco(idespaco)
+        const objetohorarioindisponiveis = validacaoreserva.montaObjetoDiasHorariosIndiponiveis(results)
+        return objetohorarioindisponiveis;
     }
 
     async indexJoinEspacoUser(id: number, espaco: number, tipofiltro: string): Promise<ReservaJoinResponse[]> {

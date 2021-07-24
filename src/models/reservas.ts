@@ -35,6 +35,11 @@ export interface ReservaJson {
     usuario_id: number;
 }
 
+export interface DiasHorariosIndiponiveis {
+    horario: string
+    horariosindiponveis: Number[]
+}
+
 export class Reservas {
     id: number;
     horario: string;
@@ -81,7 +86,7 @@ export class Reservas {
                     join('usuario', 'reservas.usuario_id', '=', 'usuario.id').
                     join('espacos', 'reservas.espacos_id', '=', 'espacos.id').
                     where(filtros).where('reservas.horario', '>=', datainicial).
-                    select('reservas.id', 'reservas.horario', 'espacos.nameespaco').orderBy('reservas.horario') as ReservaJoin[]
+                    select('reservas.id', 'reservas.horario', 'espacos.nameespaco', 'usuario.name').orderBy('reservas.horario') as ReservaJoin[]
 
                 return validacaoreserva.passandoReservaJoinParaReservaJson(espacos);
 
@@ -99,6 +104,19 @@ export class Reservas {
             console.log(err)
         }
     }
+
+    async VerificandoHorariosIndisponiveisPorEspaco(id: number): Promise<Reservas[]> {
+        const dataretorna = new DataRetorna()
+        var [datainicial, datafinal] = dataretorna.retornaDataHoje()
+        try {
+            const espacos = await knex('reservas').where({ espacos_id: id }).
+                where('reservas.horario', '>=', datainicial) as Reservas[]
+            return espacos;
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
 
 
     async DeleteReserva(id: number): Promise<boolean> {
