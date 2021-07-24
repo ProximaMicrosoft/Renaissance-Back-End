@@ -139,9 +139,9 @@ export class ValidacoesReserva {
         return lista
     }
 
-    verificaDentroArrayRegraDeUnidade(array: DiasHorariosIndiponiveis[], espaco: string): DiasHorariosIndiponiveis[] {
+    // verificaDentroArrayRegraDeUnidade(array: DiasHorariosIndiponiveis[], espaco: string): DiasHorariosIndiponiveis[] {
 
 
-    }
+    // }
 
 }
