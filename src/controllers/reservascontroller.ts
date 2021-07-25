@@ -16,12 +16,12 @@ export class ReservasController {
     }
 
     async indexJoinReservasUser(req: Request, res: Response) {
-        const id = req.params.id
-        const espaco = req.query.espaco
+        const id_usuario = req.params.id_usuario
+        const id_espaco = req.query.id_espaco
         const tipofiltro = req.query.tipofiltro as string
         try {
             const reservaservice = new RerservaService();
-            const results = await reservaservice.indexJoinEspacoUser(Number(id), Number(espaco), tipofiltro)
+            const results = await reservaservice.indexJoinEspacoUser(Number(id_usuario), Number(id_espaco), tipofiltro)
             return res.json(results)
         } catch (err) {
             return res.status(400).json("Ocorreu algum erro!")
@@ -29,7 +29,7 @@ export class ReservasController {
     }
 
     async verificandoHorariosIndisponiveisEspaco(req: Request, res: Response) {
-        const idespaco = req.params.id
+        const idespaco = req.params.id_espaco
         try {
             const reservaservice = new RerservaService()
             const results = await reservaservice.verificaHorariosIndisponiveisPorReserva(Number(idespaco))

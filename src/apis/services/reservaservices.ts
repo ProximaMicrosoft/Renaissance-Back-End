@@ -17,7 +17,7 @@ export class RerservaService {
             respostas.resposta = message
             return respostas
         }
-        var verificandoregradequantidade = await validacaoreserva.verificaSeQuantidadeDeRegistroUltrapassaUnidadeTempo(espacoid.nameespaco, reservasjson.data, reservasjson.horario)
+        var verificandoregradequantidade = await validacaoreserva.verificaSeQuantidadeDeRegistroUltrapassaUnidadeTempo(espacoid.nameespaco, reservasjson.data, reservasjson.horario, reservasjson.espacos_id)
         if (verificandoregradequantidade) {
             respostas.status = 400
             respostas.resposta = "Você tentou cadastrar um reserva, porém o limite para esse horário foi excedido"
@@ -50,15 +50,18 @@ export class RerservaService {
 
     async verificaHorariosIndisponiveisPorReserva(idespaco: number): Promise<DiasHorariosIndiponiveis[]> {
         const reserva = new Reservas()
+        const espaco = new Espaco()
         const validacaoreserva = new ValidacoesReserva()
+        const objectespaco = await espaco.RetornaNomeEspacoPorId(idespaco)
         const results = await reserva.VerificandoHorariosIndisponiveisPorEspaco(idespaco)
         const objetohorarioindisponiveis = validacaoreserva.montaObjetoDiasHorariosIndiponiveis(results)
-        return objetohorarioindisponiveis;
+        const indisponiveisrealmente = validacaoreserva.verificandoRealmenteSeHorarioEstaIndiponivel(objetohorarioindisponiveis, objectespaco.nameespaco, idespaco)
+        return indisponiveisrealmente;
     }
 
-    async indexJoinEspacoUser(id: number, espaco: number, tipofiltro: string): Promise<ReservaJoinResponse[]> {
+    async indexJoinEspacoUser(id_usuario: number, id_espaco: number, tipofiltro: string): Promise<ReservaJoinResponse[]> {
         const reserva = new Reservas()
-        const results = await reserva.SelectReservasJoin(id, espaco, tipofiltro)
+        const results = await reserva.SelectReservasJoin(id_usuario, id_espaco, tipofiltro)
         return results;
     }
 

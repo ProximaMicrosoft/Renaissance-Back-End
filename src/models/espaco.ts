@@ -35,6 +35,15 @@ export class Espaco {
         }
     }
 
+    async RetornaNomeEspacoPorId(id: number): Promise<Espaco> {
+        try {
+            const espacos = await knex('espacos').where({ id: id }).select('espacos.nameespaco') as Espaco[]
+            return espacos[0];
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
     async UpdateEspaco(nameespaco: String, fotoespaco: String, descricaoespaco: String, id: number): Promise<boolean> {
         try {
             await knex('espacos').update({ nameespaco, fotoespaco, descricaoespaco }).where({ id })

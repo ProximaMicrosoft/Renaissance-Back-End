@@ -6,4 +6,11 @@ export class DataRetorna {
         const datafinal = datapadrao + " 23:59:00+00"
         return [datainicial, datafinal]
     }
+    //12/10/2012 recebe datadestejeito
+    recebeDataRetornaDataInicialEFinal(data: string): [String, String] {
+        var dataaocontrario = data.split("/")[2] + "-" + data.split("/")[1] + "-" + data.split("/")[0]
+        const datainicial = dataaocontrario + " 00:00:00+00"
+        const datafinal = dataaocontrario + " 23:59:00+00"
+        return [datainicial, datafinal]
+    }
 }

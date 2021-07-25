@@ -81,7 +81,7 @@ export class ValidacoesReserva {
     }
 
     //verifica se a quantidade de reservas por espaco é grande ou menor
-    async verificaSeQuantidadeDeRegistroUltrapassaUnidadeTempo(espaco: string, data: string, horario: number): Promise<boolean> {
+    async verificaSeQuantidadeDeRegistroUltrapassaUnidadeTempo(espaco: string, data: string, horario: number, espaco_id: number): Promise<boolean> {
 
         const reservas = new Reservas()
         var numerolimite: number
@@ -94,7 +94,8 @@ export class ValidacoesReserva {
             }
         })
         var dataformatada = this.montarData(data, horario)
-        var [numero, errorqtd] = await reservas.VerificaQuantidadeReservaPorData(dataformatada)
+        console.log(dataformatada)
+        var [numero, errorqtd] = await reservas.VerificaQuantidadeReservaPorData(dataformatada, espaco, espaco_id)
         if (numero < numerolimite) {
             return false
         } else {
@@ -115,13 +116,19 @@ export class ValidacoesReserva {
 
             if (index == 0) {
                 horariodisponivel.horario = data
-                horariodisponivel.horariosindiponveis.push(Number(horarioseparado))
+
+                if (horariodisponivel.horariosindiponveis.includes(Number(horarioseparado)) == false) {
+                    horariodisponivel.horariosindiponveis.push(Number(horarioseparado))
+                }
                 lista.push(horariodisponivel)
                 horariodisponivel = <DiasHorariosIndiponiveis>{}
             } else {
                 if (lista[(lista.length) - 1].horario == data) {
                     lista[(lista.length) - 1].horario = data
-                    lista[(lista.length) - 1].horariosindiponveis.push(Number(horarioseparado))
+                    //verificando se horario ja existe no array
+                    if (lista[(lista.length) - 1].horariosindiponveis.includes(Number(horarioseparado)) == false) {
+                        lista[(lista.length) - 1].horariosindiponveis.push(Number(horarioseparado))
+                    }
                     console.log(lista)
                 } else {
                     horariodisponivel = <DiasHorariosIndiponiveis>{}
@@ -129,7 +136,9 @@ export class ValidacoesReserva {
                     horariodisponivel.horario = data
                     console.log(lista)
                     horariodisponivel.horariosindiponveis = []
-                    horariodisponivel.horariosindiponveis.push(Number(horarioseparado))
+                    if (horariodisponivel.horariosindiponveis.includes(Number(horarioseparado)) == false) {
+                        horariodisponivel.horariosindiponveis.push(Number(horarioseparado))
+                    }
                     lista.push(horariodisponivel)
                 }
 
@@ -138,6 +147,39 @@ export class ValidacoesReserva {
         })
         return lista
     }
+
+    async verificandoRealmenteSeHorarioEstaIndiponivel(listas: DiasHorariosIndiponiveis[], nomespaco: string, idespaco: number) {
+        var listadepois = <DiasHorariosIndiponiveis[]>{}
+
+        listadepois = []
+        var object = <DiasHorariosIndiponiveis>{}
+        object.horariosindiponveis = []
+
+        for (var i = 0; i < listas.length; i++) {
+            for (var t = 0; t < listas[i].horariosindiponveis.length; t++) {
+                var booleano = await this.verificaSeQuantidadeDeRegistroUltrapassaUnidadeTempo(nomespaco, listas[i].horario,
+                    listas[i].horariosindiponveis[t], idespaco)
+                if (booleano) {
+                    object.horario = listas[i].horario
+                    if (object.horariosindiponveis.includes(listas[i].horariosindiponveis[t]) == false) {
+                        object.horariosindiponveis.push(listas[i].horariosindiponveis[t])
+                    }
+                }
+
+            }
+
+            if (object.horariosindiponveis.length > 0) {
+                listadepois.push(object)
+                console.log(listadepois)
+                object = <DiasHorariosIndiponiveis>{}
+                object.horariosindiponveis = []
+            }
+
+        }
+        return listadepois
+    }
+
+
 
     // verificaDentroArrayRegraDeUnidade(array: DiasHorariosIndiponiveis[], espaco: string): DiasHorariosIndiponiveis[] {
 
