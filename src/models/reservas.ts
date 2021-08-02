@@ -112,7 +112,10 @@ export class Reservas {
         var [datainicial, datafinal] = dataretorna.retornaDataHoje()
         try {
             const espacos = await knex('reservas').where({ espacos_id: id }).
-                where('reservas.horario', '>=', datainicial) as Reservas[]
+                where('reservas.horario', '>=', datainicial).orderBy('reservas.horario', 'asc') as Reservas[]
+
+            console.log(await knex('reservas').where({ espacos_id: id }).
+                where('reservas.horario', '>=', datainicial).orderBy('reservas.horario', 'asc').toString())
             return espacos;
         } catch (err) {
             console.log(err)
