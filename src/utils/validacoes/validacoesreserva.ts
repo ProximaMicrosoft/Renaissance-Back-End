@@ -109,7 +109,7 @@ export class ValidacoesReserva {
         var lista = <DiasHorariosIndiponiveis[]>{}
         lista = []
         var horariodisponivel = <DiasHorariosIndiponiveis>{}
-        horariodisponivel.horariosindiponveis = []
+        horariodisponivel.horariosindiponiveis = []
 
         reservas.forEach((reserva, index) => {
             var [horarioseparado, data] = this.desmontaData(new Date(reserva.horario))
@@ -117,8 +117,8 @@ export class ValidacoesReserva {
             if (index == 0) {
                 horariodisponivel.horario = data
 
-                if (horariodisponivel.horariosindiponveis.includes(Number(horarioseparado)) == false) {
-                    horariodisponivel.horariosindiponveis.push(Number(horarioseparado))
+                if (horariodisponivel.horariosindiponiveis.includes(Number(horarioseparado)) == false) {
+                    horariodisponivel.horariosindiponiveis.push(Number(horarioseparado))
                 }
                 lista.push(horariodisponivel)
                 horariodisponivel = <DiasHorariosIndiponiveis>{}
@@ -126,8 +126,8 @@ export class ValidacoesReserva {
                 if (lista[(lista.length) - 1].horario == data) {
                     lista[(lista.length) - 1].horario = data
                     //verificando se horario ja existe no array
-                    if (lista[(lista.length) - 1].horariosindiponveis.includes(Number(horarioseparado)) == false) {
-                        lista[(lista.length) - 1].horariosindiponveis.push(Number(horarioseparado))
+                    if (lista[(lista.length) - 1].horariosindiponiveis.includes(Number(horarioseparado)) == false) {
+                        lista[(lista.length) - 1].horariosindiponiveis.push(Number(horarioseparado))
                     }
                     console.log(lista)
                 } else {
@@ -135,9 +135,9 @@ export class ValidacoesReserva {
                     console.log(lista)
                     horariodisponivel.horario = data
                     console.log(lista)
-                    horariodisponivel.horariosindiponveis = []
-                    if (horariodisponivel.horariosindiponveis.includes(Number(horarioseparado)) == false) {
-                        horariodisponivel.horariosindiponveis.push(Number(horarioseparado))
+                    horariodisponivel.horariosindiponiveis = []
+                    if (horariodisponivel.horariosindiponiveis.includes(Number(horarioseparado)) == false) {
+                        horariodisponivel.horariosindiponiveis.push(Number(horarioseparado))
                     }
                     lista.push(horariodisponivel)
                 }
@@ -153,26 +153,26 @@ export class ValidacoesReserva {
 
         listadepois = []
         var object = <DiasHorariosIndiponiveis>{}
-        object.horariosindiponveis = []
+        object.horariosindiponiveis = []
 
         for (var i = 0; i < listas.length; i++) {
-            for (var t = 0; t < listas[i].horariosindiponveis.length; t++) {
+            for (var t = 0; t < listas[i].horariosindiponiveis.length; t++) {
                 var booleano = await this.verificaSeQuantidadeDeRegistroUltrapassaUnidadeTempo(nomespaco, listas[i].horario,
-                    listas[i].horariosindiponveis[t], idespaco)
+                    listas[i].horariosindiponiveis[t], idespaco)
                 if (booleano) {
                     object.horario = listas[i].horario
-                    if (object.horariosindiponveis.includes(listas[i].horariosindiponveis[t]) == false) {
-                        object.horariosindiponveis.push(listas[i].horariosindiponveis[t])
+                    if (object.horariosindiponiveis.includes(listas[i].horariosindiponiveis[t]) == false) {
+                        object.horariosindiponiveis.push(listas[i].horariosindiponiveis[t])
                     }
                 }
 
             }
 
-            if (object.horariosindiponveis.length > 0) {
+            if (object.horariosindiponiveis.length > 0) {
                 listadepois.push(object)
                 console.log(listadepois)
                 object = <DiasHorariosIndiponiveis>{}
-                object.horariosindiponveis = []
+                object.horariosindiponiveis = []
             }
 
         }

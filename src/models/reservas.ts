@@ -37,7 +37,7 @@ export interface ReservaJson {
 
 export interface DiasHorariosIndiponiveis {
     horario: string
-    horariosindiponveis: number[]
+    horariosindiponiveis: number[]
 }
 
 export class Reservas {
