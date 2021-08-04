@@ -1,4 +1,4 @@
-# Back End do app do condomínio Reminiscense
+# Back End do app do condomínio Renaissance
 #### Aqui está toda a regra de negócio do app. Esta é uma api no padrão REST, construída utilizando o padrão de projeto MVC (Model, View, Controller).
 
 ##  💻 Tecnologias Utilizadas
