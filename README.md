@@ -2,7 +2,12 @@
 #### Aqui está toda a regra de negócio do app, esta é uma api no padrão REST.
 
 ##  💻 Tecnologias Utilizadas
-#### Node Js, Knex Js, Typescript
+
+<ul>
+    <img src="https://appmasters.io/static/typescript-logo-26cc95f255ccb936d154b43614f61602.png" height="30">
+    <img src="https://cdn.worldvectorlogo.com/logos/knex-1.svg" height="30">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Postgresql_elephant.svg/1200px-Postgresql_elephant.svg.png" height="30">
+</ul>
 
 ## 🚀 Como rodar ?
 #### 1- Ter o NODE instalado em sua versão mais recente
