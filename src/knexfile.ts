@@ -3,11 +3,7 @@ dotenv.config({
     path: process.env.NODE_ENV === "test" ? ".env.test" : ".env"
 })
 
-console.log("DATABASE", process.env.DATABASE)
-console.log("PASSWORD", process.env.PASSWORDBANCO)
-console.log("PORT", process.env.PORT)
-console.log("USUARIO", process.env.USUARIOBANCO)
-console.log("Dentro do Index", process.env.DATABASE_URL)
+
 module.exports = {
     client: 'pg',
     connection: {

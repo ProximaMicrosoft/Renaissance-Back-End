@@ -86,8 +86,8 @@ export class Reservas {
                     join('usuario', 'reservas.usuario_id', '=', 'usuario.id').
                     join('espacos', 'reservas.espacos_id', '=', 'espacos.id').
                     where(filtros).where('reservas.horario', '>=', datainicial).
-                    select('reservas.id', 'reservas.horario', 'espacos.nameespaco', 'usuario.name').orderBy('reservas.horario') as ReservaJoin[]
-
+                    select('reservas.id', 'reservas.horario', 'reservas.espacos_id',
+                        'espacos.nameespaco', 'usuario.name').orderBy('reservas.horario') as ReservaJoin[]
                 return validacaoreserva.passandoReservaJoinParaReservaJson(espacos);
 
             }
