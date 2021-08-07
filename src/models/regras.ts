@@ -19,8 +19,8 @@ export class Regras {
 
     async SelectRegras(): Promise<Regras[]> {
         try {
-            const user = await knex('regras') as Regras[]
-            return user;
+            const regras = await knex('regras') as Regras[]
+            return regras;
         } catch (err) {
             console.log(err)
         }

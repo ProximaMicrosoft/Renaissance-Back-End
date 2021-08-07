@@ -20,10 +20,17 @@ export class RegrasService {
     }
 
     async index(): Promise<Regras[]> {
+        var lista = <Regras[]>{}
+        lista = []
         const regras = new Regras()
         const results = await regras.SelectRegras()
-        return results;
+        results.forEach((result) => {
+            result.arquivo = "https://backendprojeto.herokuapp.com/uploads/" + result.arquivo
+            lista.push(result)
+        })
+        return lista;
     }
+
 
     async delete(id: string): Promise<Respostas> {
         const regras = new Regras()
