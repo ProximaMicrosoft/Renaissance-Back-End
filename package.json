@@ -5,8 +5,8 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/server.js",
-    "dev": "NODE_ENV=test ts-node-dev --transpile-only --ignore-watch node_modules --no-notify src/server.ts",
-    "knex:migrate": "NODE_ENV=test knex migrate:latest --knexfile src/knexfile.ts migrate:latest",
+    "dev": "ts-node-dev --transpile-only --ignore-watch node_modules --no-notify src/server.ts",
+    "knex:migrate": "node -r dotenv/config ./node_modules/knex/bin/cli.js --knexfile src/knexfile.ts migrate:latest",
     "knex:migratejs": "knex migrate:latest --knexfile dist/knexfile.js migrate:latest",
     "knex:rollback": "knex migrate:rollback --knexfile src/knexfile.ts migrate:rollback",
     "knex:rollbackjs": "knex migrate:rollback --knexfile src/knexfile.js migrate:rollback",

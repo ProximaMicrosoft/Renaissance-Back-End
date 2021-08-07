@@ -4,9 +4,12 @@ import multerConfig from './config/multer';
 import { UserController } from './controllers/usercontroller';
 import { EspacoController } from './controllers/espacocontroller';
 import { ReservasController } from './controllers/reservascontroller';
+import { RegrasController } from './controllers/regrascontroller';
+
 const userController = new UserController();
 const espacoController = new EspacoController();
 const reservasController = new ReservasController();
+const regrasController = new RegrasController();
 const routes = express.Router();
 const upload = multer(multerConfig);
 
@@ -22,6 +25,11 @@ routes.get('/espaco', espacoController.index)
 routes.post('/espaco', upload.single('fotoespaco'), espacoController.create)
 routes.put('/espaco/:id', espacoController.update)
 routes.delete('/espaco/:id', espacoController.delete)
+
+///regras
+routes.get('/regras', regrasController.index)
+routes.post('/regras', upload.single('arquivo'), regrasController.create)
+routes.delete('/regras/:id', regrasController.delete)
 
 ///reservas
 routes.get('/reservas', reservasController.index)
