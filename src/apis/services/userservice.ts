@@ -2,6 +2,7 @@ import { User } from '../../models/user';
 import { Respostas } from '../../models/respostas';
 import { ValidacaoUser } from '../../utils/validacoes/validacoesuser';
 import { Criptografia } from '../../utils/criptografia/criptografia';
+import { JsonWebToken } from '../../utils/webtoken/jsonwebtoken';
 
 export class UserService {
     async create(user: User): Promise<Respostas> {
@@ -55,8 +56,10 @@ export class UserService {
         const usuario = new User()
         const respostas = new Respostas();
         const [result, userlogado] = await usuario.Login(user)
+        const jsonwebtoken = new JsonWebToken()
         console.log("results" + result)
         if (result) {
+            userlogado.token = jsonwebtoken.geraToken()
             respostas.status = 200
             respostas.resposta = "Sucesso !"
             return [respostas, userlogado]
