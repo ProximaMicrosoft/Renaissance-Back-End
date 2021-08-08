@@ -28,11 +28,12 @@ export class UserController {
         const id = req.params.id
         try {
             const user = new User()
-            var result = await user.UpdateUser(body.name, body.password, Number(id), body.role)
+            var result = await user.UpdateUser(body.name, body.password, Number(id), body.role,
+                body.numerotelefone, body.cpf, body.datanascimento)
             if (result) {
                 return res.status(201).json("Alterado com sucesso !")
             } else {
-                return res.status(401).json("Ocorreu algum erro ao alterar!")
+                return res.status(400).json("Ocorreu algum erro ao alterar!")
             }
         }
         catch (err) {
@@ -57,7 +58,6 @@ export class UserController {
             const [respostas, user] = await userservice.login(body)
             return res.status(respostas.status).json({ "resposta": respostas.resposta, "user": user })
         }
-
     }
 
 }

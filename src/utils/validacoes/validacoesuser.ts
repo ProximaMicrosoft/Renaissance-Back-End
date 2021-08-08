@@ -49,7 +49,7 @@ export class ValidacaoUser {
 
     VerificaTelefone(telefone: String): boolean {
         console.log(telefone)
-        if (String(telefone).length == 11) {
+        if (telefone.length == 11) {
             return true
         } else {
             return false

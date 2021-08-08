@@ -8,7 +8,9 @@ export class User {
     token: string;
     numerotelefone: string;
     password: string;
-    numeroapartamento: number
+    cpf: string;
+    datanascimento: string;
+    numeroapartamento: string;
     role: string;
 
     async InsertUser(usuario: User): Promise<boolean> {
@@ -32,9 +34,9 @@ export class User {
         }
     }
 
-    async UpdateUser(name: String, password: String, id: number, role: String): Promise<boolean> {
+    async UpdateUser(name: String, password: String, id: number, role: String, numerotelefone: String, cpf: String, datanascimento: String): Promise<boolean> {
         try {
-            await knex('usuario').update({ name, password, role }).where({ id })
+            await knex('usuario').update({ name, password, role, numerotelefone, cpf, datanascimento }).where({ id })
             return true
         } catch (err) {
             console.log(err)
