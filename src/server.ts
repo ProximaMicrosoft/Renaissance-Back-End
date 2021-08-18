@@ -6,9 +6,8 @@ import { Criptografia } from './utils/criptografia/criptografia';
 import { Espaco } from './models/espaco'
 import { User } from './models/user'
 import jwt from 'jsonwebtoken'
-import fs from 'fs'
-
 import dotenv from 'dotenv';
+import { Mailer } from './mailer/mailer';
 dotenv.config({
     path: process.env.NODE_ENV === "test" ? ".env.test" : ".env"
 })
@@ -32,7 +31,9 @@ app.get('/cadastrodevisitas', async function (req, res) {
     var listadeusuario = await usuarios.SelectUser()
     res.render('cadastroagendamentos.ejs', { espacos: listadeespacos, usuarios: listadeusuario });
 });
-const cripto = new Criptografia();
+const cripto = new Criptografia()
+const email = new Mailer()
+email.enviarEmail();
 var token = jwt.sign({ foo: 'bar' }, process.env.CHAVE, { expiresIn: '1h' });
 console.log(token)
 console.log(cripto.VericaHashSenha("####56567687879", "$2b$10$BWuYYH42HdgfOplpJCoMuO", "$2b$10$sxbpcv.FfJbGnmYEJFXXuOTjpLfYAY/dX4SWa.P7dlmWGSS/6txmu"))
