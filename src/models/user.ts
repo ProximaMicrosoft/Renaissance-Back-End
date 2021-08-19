@@ -13,15 +13,24 @@ export class User {
     numeroapartamento: string;
     role: string;
 
-    async InsertUser(usuario: User): Promise<boolean> {
+    async InsertUser(usuario: User): Promise<[boolean, number]> {
         try {
-            await knex('usuario').insert(
+            var id = await knex('usuario').returning('id').insert(
                 usuario
             )
-            return true
+
+            return [true, id[0]]
         } catch (err) {
             console.log(err)
-            return false
+            return [false, 0]
+        }
+    }
+    async verificandoSeEmailExiste(email: string): Promise<User> {
+        try {
+            const user = await knex('usuario').where(email) as User[]
+            return user[0];
+        } catch (err) {
+            console.log(err)
         }
     }
 

@@ -3,6 +3,7 @@ import { Respostas } from '../../models/respostas';
 import { ValidacaoUser } from '../../utils/validacoes/validacoesuser';
 import { Criptografia } from '../../utils/criptografia/criptografia';
 import { JsonWebToken } from '../../utils/webtoken/jsonwebtoken';
+import { AuxiliarSenha } from '../../models/auxiliarsenha';
 
 export class UserService {
     async create(user: User): Promise<Respostas> {
@@ -10,12 +11,14 @@ export class UserService {
         const validacaoUser = new ValidacaoUser()
         const criptografia = new Criptografia()
         const respostas = new Respostas();
+        const auxiliarsenha = new AuxiliarSenha();
         var resultvalidacao = validacaoUser.ValidaUsuario(user)
         if (resultvalidacao) {
             const cripto = criptografia.gerarSalt(user.password)
             user.token = cripto.salt
             user.password = cripto.senhaprasalvar
-            var result = await usuario.InsertUser(user)
+            var [result, id] = await usuario.InsertUser(user)
+            await auxiliarsenha.InsertAuxiliarSenha(new AuxiliarSenha(null, false, id))
             if (result) {
                 respostas.status = 201
                 respostas.resposta = "Cadastrado com sucesso !"
