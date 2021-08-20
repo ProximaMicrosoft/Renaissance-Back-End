@@ -5,11 +5,13 @@ import { UserController } from './controllers/usercontroller';
 import { EspacoController } from './controllers/espacocontroller';
 import { ReservasController } from './controllers/reservascontroller';
 import { RegrasController } from './controllers/regrascontroller';
+import { MailerController } from './controllers/mailercontroller';
 
 const userController = new UserController();
 const espacoController = new EspacoController();
 const reservasController = new ReservasController();
 const regrasController = new RegrasController();
+const mailerController = new MailerController();
 const routes = express.Router();
 const upload = multer(multerConfig);
 
@@ -37,6 +39,9 @@ routes.get('/reservasjoin/:id_usuario', reservasController.indexJoinReservasUser
 routes.get('/horariosindisponiveis/:id_espaco', reservasController.verificandoHorariosIndisponiveisEspaco)
 routes.post('/reservas', reservasController.create)
 routes.delete('/reservas/:id', reservasController.delete)
+
+//mailer
+routes.post('/recuperarsenha', mailerController.recuperarSenhaEmail)
 
 
 export default routes;

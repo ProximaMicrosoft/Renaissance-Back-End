@@ -7,7 +7,7 @@ dotenv.config({
 export class JsonWebToken {
 
     geraToken(): string {
-        var token = jwt.sign({ foo: 'bar' }, process.env.CHAVE, { expiresIn: '1h' })
+        var token = jwt.sign({ foo: 'bar' }, process.env.CHAVE, { expiresIn: '12h' })
         return token
     }
 

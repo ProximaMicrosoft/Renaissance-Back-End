@@ -24,9 +24,9 @@ export class AuxiliarSenha {
         }
     }
 
-    async UpdateAuxiliarSenha(token_senha: String, ativo: boolean, id: number): Promise<boolean> {
+    async UpdateAuxiliarSenha(token_senha: string, ativo: boolean, usuario_id: number): Promise<boolean> {
         try {
-            await knex('auxiliar_senha').update({ token_senha, ativo }).where({ id })
+            await knex('auxiliar_senha').update({ token_senha, ativo }).where({ usuario_id })
             return true
         } catch (err) {
             console.log(err)

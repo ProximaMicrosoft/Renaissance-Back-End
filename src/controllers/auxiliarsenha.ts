@@ -19,7 +19,7 @@ export class AuxiliarSenhaController {
     async update(req: Request, res: Response, next: NextFunction) {
         if (new JsonWebToken().verificaToken(req.headers.authorization)) {
             const body = req.body as AuxiliarSenha
-            const id = req.params.id
+            const id = req.params.usuario_id
             try {
                 const auxiliar = new AuxiliarSenha()
                 var result = await auxiliar.UpdateAuxiliarSenha(body.token_senha, body.ativo, Number(id))

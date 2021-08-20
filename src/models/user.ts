@@ -27,7 +27,7 @@ export class User {
     }
     async verificandoSeEmailExiste(email: string): Promise<User> {
         try {
-            const user = await knex('usuario').where(email) as User[]
+            const user = await knex('usuario').where({ email }) as User[]
             return user[0];
         } catch (err) {
             console.log(err)

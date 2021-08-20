@@ -1,3 +1,4 @@
+import { User } from '../models/user';
 import nodemailer from 'nodemailer'
 
 
@@ -11,24 +12,22 @@ var remetente = nodemailer.createTransport({
     }
 });
 
-var emailASerEnviado = {
-    from: 'renaissanceappcondominio@gmail.com',
-    to: 'antonioguilhermeinfo@gmail.com',
-    subject: 'Enviando Email com Node.js',
-    text: 'Estou te enviando este email com node.js',
-};
 
 
 
 export class Mailer {
-    enviarEmail() {
-        remetente.sendMail(emailASerEnviado, function (error) {
-            if (error) {
-                console.log(error);
-            } else {
-                console.log('Email enviado com sucesso.');
-            }
-        });
+    email: string
+
+    async enviarEmail(usuario: User, link: string) {
+        var emailASerEnviado = {
+            from: 'renaissanceappcondominio@gmail.com',
+            to: usuario.email,
+            subject: 'Esqueceu a senha ?',
+            text: 'Atualize sua senha clicando neste link : ' + link,
+        };
+
+        var valor = await remetente.sendMail(emailASerEnviado);
+        return valor;
 
     }
 }
