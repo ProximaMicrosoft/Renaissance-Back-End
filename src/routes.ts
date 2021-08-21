@@ -41,7 +41,8 @@ routes.post('/reservas', reservasController.create)
 routes.delete('/reservas/:id', reservasController.delete)
 
 //mailer
-routes.post('/recuperarsenha', mailerController.recuperarSenhaEmail)
+routes.post('/enviaremailtoken', mailerController.recuperarSenhaEmail)
+routes.post('/recuperaremailtoken/:token', mailerController.mudaSenhaAtravesToken)
 
 
 export default routes;

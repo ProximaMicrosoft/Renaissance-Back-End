@@ -1,5 +1,15 @@
 import knex from '../database/index'
 
+interface AuxiliarSenhaUser {
+    token_senha: string;
+    ativo: boolean;
+    usuario_id: number;
+    name: string;
+    email: string;
+    token: string;
+    numerotelefone: string;
+}
+
 export class AuxiliarSenha {
     id: number;
     token_senha: string;
@@ -21,6 +31,17 @@ export class AuxiliarSenha {
             return true
         } catch (err) {
             return false
+        }
+    }
+
+    async SelectAuxiliarSenhaJoin(token: string): Promise<AuxiliarSenhaUser> {
+        try {
+            const auxiliarsenha = await knex('auxiliar_senha').
+                join('usuario', 'auxiliar_senha.usuario_id', '=', 'usuario.id').
+                where('auxiliar_senha.token_senha', '=', token) as AuxiliarSenhaUser[]
+            return auxiliarsenha[0]
+        } catch (err) {
+            console.log(err)
         }
     }
 

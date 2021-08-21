@@ -71,7 +71,6 @@ export class UserService {
             respostas.resposta = "Usuário não autorizado!"
             return [respostas, userlogado]
         }
-
     }
 
 }

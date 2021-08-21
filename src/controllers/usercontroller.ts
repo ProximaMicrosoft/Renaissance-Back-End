@@ -34,7 +34,7 @@ export class UserController {
             const id = req.params.id
             try {
                 const user = new User()
-                var result = await user.UpdateUser(body.name, body.password, Number(id), body.role,
+                var result = await user.UpdateUser(body.name, Number(id), body.role,
                     body.numerotelefone, body.cpf, body.datanascimento)
                 if (result) {
                     return res.status(201).json("Alterado com sucesso !")

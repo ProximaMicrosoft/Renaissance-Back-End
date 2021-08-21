@@ -1,5 +1,10 @@
 import { User } from '../models/user';
 import nodemailer from 'nodemailer'
+import dotenv from 'dotenv';
+dotenv.config({
+    path: process.env.NODE_ENV === "test" ? ".env.test" : ".env"
+})
+
 
 
 var remetente = nodemailer.createTransport({
@@ -9,7 +14,7 @@ var remetente = nodemailer.createTransport({
     html: "",
     auth: {
         user: 'renaissanceappcondominio@gmail.com',
-        pass: ''
+        pass: process.env.SENHAEMAIL
     }
 });
 
