@@ -6,6 +6,7 @@ var remetente = nodemailer.createTransport({
     host: 'smtp.gmail.com',
     port: 587,
     secure: false,
+    html: "",
     auth: {
         user: 'renaissanceappcondominio@gmail.com',
         pass: ''
