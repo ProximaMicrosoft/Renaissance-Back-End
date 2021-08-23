@@ -26,6 +26,9 @@ export class Mailer {
 
     async enviarEmail(usuario: User, link: string) {
         var emailASerEnviado = {
+            html: `<p>Oi ${usuario.name}</p><br><p>Por favor, se deseja redefinir sua senha clique neste link para prosseguir
+            <a href='${link}'>${link}</a>` + `</p>
+            </h1>`,
             from: 'renaissanceappcondominio@gmail.com',
             to: usuario.email,
             subject: 'Esqueceu a senha ?',

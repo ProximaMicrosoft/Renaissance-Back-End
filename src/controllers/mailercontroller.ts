@@ -22,7 +22,7 @@ export class MailerController {
         } else {
             var salt = crypto.randomBytes(20).toString('hex');
             await auxiliarsenha.UpdateAuxiliarSenha(salt, true, Number(usuario.id))
-            var result = await email.enviarEmail(usuario, "www.condomiorenasceredefinirsenha/" + salt)
+            var result = await email.enviarEmail(usuario, 'https://renaissance-iota.vercel.app/forgot-password/' + salt)
             if (result) {
                 return res.status(200).json({ "Sucesso !": " Email enviado com sucesso !" })
             } else {
