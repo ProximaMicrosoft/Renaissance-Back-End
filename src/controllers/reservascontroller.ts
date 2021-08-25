@@ -40,6 +40,25 @@ export class ReservasController {
 
     }
 
+    async indexReservasModoAdmin(req: Request, res: Response) {
+        if (new JsonWebToken().verificaToken(req.headers.authorization)) {
+            const id_usuario = req.body.id_usuario as string
+            const id_espaco = req.body.id_espaco as string
+            const data_inicial = req.body.data_inicial as string
+            const data_final = req.body.data_final as string
+            try {
+                const reservaservice = new RerservaService();
+                const results = await reservaservice.indexJoinReservaAdmin(Number(id_usuario), Number(id_espaco), data_inicial, data_final)
+                return res.json(results)
+            } catch (err) {
+                return res.status(400).json("Ocorreu algum erro!")
+            }
+        } else {
+            return res.status(401).json("Você não tem permissão para esta rota !")
+        }
+    }
+
+
     async verificandoHorariosIndisponiveisEspaco(req: Request, res: Response) {
         if (new JsonWebToken().verificaToken(req.headers.authorization)) {
             const idespaco = req.params.id_espaco

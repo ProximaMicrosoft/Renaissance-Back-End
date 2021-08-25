@@ -65,6 +65,12 @@ export class RerservaService {
         return results;
     }
 
+    async indexJoinReservaAdmin(id_usuario: number, id_espaco: number, data_inicial: string, data_final: string): Promise<ReservaJoinResponse[]> {
+        const reserva = new Reservas()
+        const results = await reserva.SelectReservasJoinModoAdmin(id_usuario, id_espaco, data_inicial, data_final)
+        return results;
+    }
+
     async delete(id: string): Promise<Respostas> {
         const reserva = new Reservas()
         const respostas = new Respostas();

@@ -36,6 +36,7 @@ routes.delete('/regras/:id', regrasController.delete)
 ///reservas
 routes.get('/reservas', reservasController.index)
 routes.get('/reservasjoin/:id_usuario', reservasController.indexJoinReservasUser)
+routes.post('/reservasadmin', reservasController.indexReservasModoAdmin)
 routes.get('/horariosindisponiveis/:id_espaco', reservasController.verificandoHorariosIndisponiveisEspaco)
 routes.post('/reservas', reservasController.create)
 routes.delete('/reservas/:id', reservasController.delete)

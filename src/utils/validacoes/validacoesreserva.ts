@@ -67,6 +67,7 @@ export class ValidacoesReserva {
             lista.horario = Number(horario)
             lista.name = reservaslista[i].name
             lista.espacos_id = reservaslista[i].espacos_id
+            lista.numeroapartamento = reservaslista[i].numeroapartamento
             listajoinresponse.push(lista)
         }
         return listajoinresponse
