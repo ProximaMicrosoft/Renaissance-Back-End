@@ -1,4 +1,4 @@
-import { Reservas, ReservaJson } from '../models/reservas';
+import { ReservaJson } from '../models/reservas';
 import { Request, Response, NextFunction } from 'express';
 import { RerservaService } from '../apis/services/reservaservices';
 import { JsonWebToken } from '../utils/webtoken/jsonwebtoken';

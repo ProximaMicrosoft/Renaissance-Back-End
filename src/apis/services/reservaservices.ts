@@ -65,10 +65,34 @@ export class RerservaService {
         return results;
     }
 
-    async indexJoinReservaAdmin(id_usuario: number, id_espaco: number, data_inicial: string, data_final: string): Promise<ReservaJoinResponse[]> {
+    async indexJoinReservaAdmin(id_usuario: number, id_espaco: number, data_inicial: string, data_final: string): Promise<(ReservaJoinResponse[])[]> {
         const reserva = new Reservas()
         const results = await reserva.SelectReservasJoinModoAdmin(id_usuario, id_espaco, data_inicial, data_final)
-        return results;
+        var listajoinresponselista = [] as (ReservaJoinResponse[])[]
+        var listajoinresponse = [] as ReservaJoinResponse[]
+        var lista = <ReservaJoinResponse>{}
+        lista = results[0]
+        results.forEach((result, index) => {
+            if (result.horario == lista.horario && result.data == lista.data) {
+                listajoinresponse.push(result)
+                if ((results.length - 1) == index) {
+                    listajoinresponselista.push(listajoinresponse)
+                }
+            } else {
+                if (listajoinresponse.length == 0) {
+                    listajoinresponse.push(lista)
+                }
+                listajoinresponselista.push(listajoinresponse)
+                listajoinresponse = []
+
+                if ((results.length - 1) == index) {
+                    listajoinresponse.push(result)
+                    listajoinresponselista.push(listajoinresponse)
+                }
+            }
+            lista = result
+        })
+        return listajoinresponselista;
     }
 
     async delete(id: string): Promise<Respostas> {
